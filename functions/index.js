@@ -1,7 +1,22 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
-const cors = require('cors')({origin: true});
+const cors = require('cors')({ origin: true });
+const firebase = require('firebase');
+const settings = { timestampsInSnapshots: true };
+const config = {
+    apiKey: 'AIzaSyDiDG_2F7eDYQChxPBFFli3yzO0X-CtWEE',
+    authDomain: 'book-store-sg-x.firebaseapp.com',
+    databaseURL: 'https://book-store-sg-x.firebaseio.com',
+    projectId: 'book-store-sg-x',
+    storageBucket: 'book-store-sg-x.appspot.com',
+    messagingSenderId: '453359978560',
+    appId: '1:453359978560:web:e0f0c40042025dd780b7a5',
+    measurementId: 'G-YH3ZSZ5XYN'
+}
+firebase.initializeApp(config);
+const db = firebase.firestore();
+firebase.firestore().settings(settings);
 admin.initializeApp();
 
 /**
@@ -17,7 +32,7 @@ let transporter = nodemailer.createTransport({
 
 exports.sendMail = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
-      
+
         // getting dest email by query string
         const _to = req.query.to;
         const _subject = req.query.subject;
@@ -29,35 +44,35 @@ exports.sendMail = functions.https.onRequest((req, res) => {
             subject: _subject,
             html: _body // email content in HTML
         };
-  
+
         // returning result
         return transporter.sendMail(mailOptions, (erro, info) => {
-            if(erro){
+            if (erro) {
                 return res.send(erro.toString());
             }
             return res.send('Sended');
         });
-    });    
+    });
 });
 
 exports.sendMailHTML = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
-      
-        // getting dest email by query string
-        const _to = req.query.to;
-        const _subject = req.query.subject;
-        //const _body = req.query.body;
+        getInfo(req.query.id).then(data => {
+            // getting dest email by query string
+            const _to = req.query.to;
+            const _subject = req.query.subject;
+            //const _body = req.query.body;
 
-        const mailOptions = {
-            from: 'Matt <book.store.sg.x@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
-            to: _to,
-            subject: _subject,
-            html: 
-            `<html>
+            const mailOptions = {
+                from: 'Matt <book.store.sg.x@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
+                to: _to,
+                subject: _subject,
+                html:
+                    `<html>
             <body>
                 <div style="width: 800px;margin: 0 auto;">
                     <div>
-                        <p>Hi! [get Name],</p>
+                        <p>Hi! ${data.shipping.name},</p>
                         <br/>
                         <p>Thank you for your purchase. Your payment for the purchase has been completed. Please check the order/shipping information</p>
                         <br/>
@@ -77,11 +92,11 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
             
                         <tr>
                             <tr>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">0711190001</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">Book</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">3</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">50</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">100</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.inv_no.date}${data.inv_no.no}</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.product_name}</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.quantity}</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.unit_price}</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.total_price}</td>
                             </tr>
                         </tr>
                     </table>
@@ -92,11 +107,11 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
                             <tbody>
                                 <tr>
                                     <td style="border: 1px solid black;padding: 5px;text-align: right;text-align: left;background: #eee;">Shipping Rate</td>
-                                    <td style="border: 1px solid black;padding: 5px;text-align: right;text-align: center;">5</td>
+                                    <td style="border: 1px solid black;padding: 5px;text-align: right;text-align: center;">${data.shipping_rate}</td>
                                 </tr>
                                 <tr>
                                     <td style="border: 1px solid black;padding: 5px;text-align: right;text-align: left;background: #eee;">Total Payment</td>
-                                    <td style="border: 1px solid black;padding: 5px;text-align: right;text-align: center;">100</td>
+                                    <td style="border: 1px solid black;padding: 5px;text-align: right;text-align: center;">${data.total_payment}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -110,19 +125,19 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
                         <tbody>
                             <tr>
                                 <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Name</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.shipping.name}</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Shipping Country</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.shipping.country}</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Shipping Address</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.shipping.address} ${data.shipping.postal_code}</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Contact No.</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.shipping.contact_no}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -134,11 +149,11 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
                         <tbody>
                             <tr>
                                 <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Payment Mothod</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">Paypal</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Amount</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.total_payment}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -153,14 +168,31 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
             </body>
             
             </html>`
-        };
-  
-        // returning result
-        return transporter.sendMail(mailOptions, (erro, info) => {
-            if(erro){
-                return res.send(erro.toString());
-            }
-            return res.send('Sent');
+            };
+
+            // returning result
+            return transporter.sendMail(mailOptions, (erro, info) => {
+                if (erro) {
+                    return res.send(erro.toString());
+                }
+                return res.send('Sent');
+            });
         });
-    });    
+    });
 });
+
+var getInfo = function (documentId) {
+    return new Promise((resolve, reject) => {
+        db.collection("order")
+            .doc(documentId)
+            .get()
+            .then(doc => {
+                if (doc.exists) {
+                    resolve(doc.data());
+                }
+            })
+            .catch(error => {
+                reject(error); // the request failed
+            });
+    });
+};

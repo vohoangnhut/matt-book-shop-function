@@ -74,7 +74,8 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
                     <div>
                         <p>Hi! ${data.shipping.name},</p>
                         <br/>
-                        <p>Thank you for your purchase. Your payment for the purchase has been completed. Please check the order/shipping information</p>
+                        <p>Thank you for your purchase. Your payment for the purchase has been completed.</p>
+                        <p>Please check the order/shipping information</p>
                         <br/>
                         <p>1. Order Information</p>
                     </div>
@@ -133,7 +134,7 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
                             </tr>
                             <tr>
                                 <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Shipping Address</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.shipping.address} ${data.shipping.postal_code}</td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.shipping.address} <br/> ${data.shipping.postal_code}</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Contact No.</td>

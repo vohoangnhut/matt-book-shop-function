@@ -69,106 +69,102 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
                 subject: _subject,
                 html:
                     `<html>
-            <body>
-                <div style="width: 800px;margin: 0 auto;">
-                    <div>
-                        <p>Hi! ${data.shipping.name},</p>
-                        <br/>
-                        <p>Thank you for your purchase. Your payment for the purchase has been completed.</p>
-                        <p>Please check the order/shipping information</p>
-                        <br/>
-                        <p>1. Order Information</p>
-                    </div>
-                    <table style="border-collapse: collapse;clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;">
-            
-                        <thead>
-                            <tr>
-                                <th style="border: 1px solid black;padding: 5px;background: #eee;">Invoice No.</th>
-                                <th style="border: 1px solid black;padding: 5px;background: #eee;">Product Name</th>
-                                <th style="border: 1px solid black;padding: 5px;background: #eee;">Quantity</th>
-                                <th style="border: 1px solid black;padding: 5px;background: #eee;">Unit Price</th>
-                                <th style="border: 1px solid black;padding: 5px;background: #eee;">Total Price</th>
-                            </tr>
-                        </thead>
-            
-                        <tr>
-                            <tr>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.inv_no.date}${data.inv_no.no}</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.product_name}</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.quantity}</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.unit_price}</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.total_price}</td>
-                            </tr>
-                        </tr>
-                    </table>
-                    <br/>
-                    <div style="overflow: hidden;">
-            
-                        <table style="border-collapse: collapse;margin-top: 1px;width: 300px;float: right;">
-                            <tbody>
+                    <body>
+                        <div style="width: 800px;margin: 0 auto;">
+                            <div>
+                                <p>Hi! ${data.shipping.name},</p>
+                                <br/>
+                                <p>Thank you for your purchase. Your payment for the purchase has been completed.</p>
+                                <p>Please check the order/shipping information</p>
+                                <br/>
+                                <p>1. Order Information</p>
+                            </div>
+                            <table style="border-collapse: collapse;clear: both;width: 100%;margin: 30px 0 0 0">
+                                <thead>
+                                    <tr>
+                                        <th style="border: 1px solid black;padding: 5px; font-weight: bold;"">Invoice No.</th>
+                                        <th style="border: 1px solid black;padding: 5px; font-weight: bold;">Product Name</th>
+                                        <th style="border: 1px solid black;padding: 5px; font-weight: bold;">Quantity</th>
+                                        <th style="border: 1px solid black;padding: 5px; font-weight: bold;">Unit Price</th>
+                                        <th style="border: 1px solid black;padding: 5px; font-weight: bold;">Total Price</th>
+                                    </tr>
+                                </thead>
+                
                                 <tr>
-                                    <td style="border: 1px solid black;padding: 5px;text-align: right;text-align: left;background: #eee;">Shipping Rate</td>
-                                    <td style="border: 1px solid black;padding: 5px;text-align: right;text-align: center;">${data.shipping_rate}</td>
+                                    <tr>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.inv_no.date}${data.inv_no.no}</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.product_name}</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.quantity}</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.unit_price}</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: right;">${data.total_price}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:none"></td>
+                                        <td style="border:none"></td>
+                                        <td style="border:none"></td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: center; ">Shipping Rate</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: right;">${data.shipping_rate}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:none"></td>
+                                        <td style="border:none"></td>
+                                        <td style="border:none"></td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: center;background: #efefef">Total Payment</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: right;background: #efefef">${data.total_payment}</td>
+                                    </tr>
                                 </tr>
-                                <tr>
-                                    <td style="border: 1px solid black;padding: 5px;text-align: right;text-align: left;background: #eee;">Total Payment</td>
-                                    <td style="border: 1px solid black;padding: 5px;text-align: right;text-align: center;">${data.total_payment}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-            
-                    </div>
-                    <div>
-                        <p>2. Delivery Information</p>
-                        <br/>
-                    </div>
-                    <table style="border-collapse: collapse;clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;">
-                        <tbody>
-                            <tr>
-                                <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Name</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.shipping.name}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Shipping Country</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.shipping.country}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Shipping Address</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.shipping.address} <br/> ${data.shipping.postal_code}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Contact No.</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.shipping.contact_no}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div>
-                        <br/>
-                        <p>3. Payment Information</p>
-                    </div>
-                    <table style="border-collapse: collapse;clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;">
-                        <tbody>
-                            <tr>
-                                <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Payment Mothod</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">Paypal</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Amount</td>
-                                <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.total_payment}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br/>
-                    <div>
-                        <p>Please do not reply to this e-mail as we are not able to respond to this messages sent to this e-mail address.</p>
-                        <br/>
-                        <p>Thank You,</p>
-                        <p>thelandlordclub</p>
-                    </div>
-                </div>
-            </body>
-            
-            </html>`
+                            </table>
+                            <br/>
+                            <div>
+                                <p>2. Delivery Information</p>
+                                <br/>
+                            </div>
+                            <table style="border-collapse: collapse;clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left; font-weight: bold;width: 200px">Name</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left;">${data.shipping.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left; font-weight: bold;width: 200px">Shipping Country</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left;">${data.shipping.country}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left; font-weight: bold;width: 200px">Shipping Address</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left;">${data.shipping.address} <br/>Post Code: ${data.shipping.postal_code}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left; font-weight: bold;width: 200px">Contact No.</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left;">${data.shipping.contact_no}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <br/>
+                                <p>3. Payment Information</p>
+                            </div>
+                            <table style="border-collapse: collapse;clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left;font-weight: bold;width: 200px">Payment Mothod</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left;">Paypal</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left;font-weight: bold;width: 200px">Amount</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left;">${data.total_payment}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <div>
+                                <p>Please do not reply to this e-mail as we are not able to respond to this messages sent to this e-mail address.</p>
+                                <br/>
+                                <p>Thank You,</p>
+                                <p>thelandlordclub</p>
+                            </div>
+                        </div>
+                    </body>
+                </html>`
             };
 
             // returning result

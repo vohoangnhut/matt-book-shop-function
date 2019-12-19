@@ -131,7 +131,7 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
                                     </tr>
                                     <tr>
                                         <td style="border: 1px solid black;padding: 5px;text-align: left; font-weight: bold;width: 200px">Shipping Address</td>
-                                        <td style="border: 1px solid black;padding: 5px;text-align: left;">${data.shipping.address} <br/>Post Code: ${data.shipping.postal_code}</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: left; white-space: pre-line;">${data.shipping.address} <br/>Postal Code: ${data.shipping.postal_code}</td>
                                     </tr>
                                     <tr>
                                         <td style="border: 1px solid black;padding: 5px;text-align: left; font-weight: bold;width: 200px">Contact No.</td>

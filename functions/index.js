@@ -19,6 +19,7 @@ const db = firebase.firestore();
 firebase.firestore().settings(settings);
 admin.initializeApp();
 
+
 /**
 * Here we're using Gmail to send 
 */

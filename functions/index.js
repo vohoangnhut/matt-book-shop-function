@@ -95,22 +95,29 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
                                         <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.inv_no.date}${data.inv_no.no}</td>
                                         <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.product_name}</td>
                                         <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.quantity}</td>
-                                        <td style="border: 1px solid black;padding: 5px;text-align: center;">${data.unit_price}</td>
-                                        <td style="border: 1px solid black;padding: 5px;text-align: right;">${data.total_price}</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: center;">$${data.unit_price}</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: right;">$${data.total_price}</td>
                                     </tr>
                                     <tr>
                                         <td style="border:none"></td>
                                         <td style="border:none"></td>
                                         <td style="border:none"></td>
                                         <td style="border: 1px solid black;padding: 5px;text-align: center; ">Shipping Rate</td>
-                                        <td style="border: 1px solid black;padding: 5px;text-align: right;">${data.shipping_rate}</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: right;">$${data.shipping_rate}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:none"></td>
+                                        <td style="border:none"></td>
+                                        <td style="border:none"></td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: center; ">Discount</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: right;">$${data.discount}</td>
                                     </tr>
                                     <tr>
                                         <td style="border:none"></td>
                                         <td style="border:none"></td>
                                         <td style="border:none"></td>
                                         <td style="border: 1px solid black;padding: 5px;text-align: center;background: #efefef">Total Payment</td>
-                                        <td style="border: 1px solid black;padding: 5px;text-align: right;background: #efefef">${data.total_payment}</td>
+                                        <td style="border: 1px solid black;padding: 5px;text-align: right;background: #efefef">$${data.total_payment}</td>
                                     </tr>
                                 </tr>
                             </table>

@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
 const cors = require('cors')({ origin: true });
 const firebase = require('firebase');
-const settings = { timestampsInSnapshots: true };
+const settings = { timestampsInSnapshots: true, merge: true };
 const config = {
     apiKey: 'AIzaSyDiDG_2F7eDYQChxPBFFli3yzO0X-CtWEE',
     authDomain: 'book-store-sg-x.firebaseapp.com',
@@ -27,7 +27,7 @@ let transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
         user: `book.store.sg.x@gmail.com`,
-        pass: `Nhut54321`
+        pass: `ztsacrvlzlfquwzv`
     }
 });
 
@@ -40,7 +40,7 @@ exports.sendMail = functions.https.onRequest((req, res) => {
         const _body = req.query.body;
 
         const mailOptions = {
-            from: 'Matt <book.store.sg.x@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
+            from: 'The Landlord Club <book.store.sg.x@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
             to: _to,
             subject: _subject,
             html: _body // email content in HTML
@@ -65,7 +65,7 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
             //const _body = req.query.body;
 
             const mailOptions = {
-                from: 'Matt <book.store.sg.x@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
+                from: 'The Landlord Club <book.store.sg.x@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
                 to: _to,
                 subject: _subject,
                 html:

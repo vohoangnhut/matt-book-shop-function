@@ -67,6 +67,7 @@ exports.sendMailHTML = functions.https.onRequest((req, res) => {
             const mailOptions = {
                 from: 'The Landlord Club <book.store.sg.x@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
                 to: _to,
+                bcc: "thelandlordclubsg@gmail.com, quantumtech.workspace@gmail.com",
                 subject: _subject,
                 html:
                     `<html>
